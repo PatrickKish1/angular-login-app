@@ -1,5 +1,12 @@
+// File level imports
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControlOptions
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../user';
 import { CommonModule } from '@angular/common';
@@ -7,7 +14,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink], // import component dependencies
   template: `
     <div class="flex items-center justify-center min-h-screen p-4">
       <div class="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
@@ -62,6 +69,8 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
 })
+
+
 export class SignupComponent {
   signupForm: FormGroup;
 
@@ -72,14 +81,16 @@ export class SignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator } as AbstractControlOptions);
   }
 
+  // check password match 
   passwordMatchValidator(g: FormGroup) {
     return g.get('password')?.value === g.get('confirmPassword')?.value
       ? null : { 'mismatch': true };
   }
 
+  // form submission
   onSubmit() {
     if (this.signupForm.valid) {
       const user: User = {
@@ -89,7 +100,7 @@ export class SignupComponent {
         password: this.signupForm.value.password,
       };
       console.log('User signed up:', user);
-      this.router.navigate(['/main']);
+      this.router.navigate(['/login']); // route user to login page
     }
   }
 }

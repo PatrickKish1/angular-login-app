@@ -1,3 +1,4 @@
+// file level import
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -6,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink], // import component dependencies
   template: `
     <div class="flex items-center justify-center min-h-screen p-4">
       <div class="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
@@ -53,7 +54,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log('User logged in:', this.loginForm.value);
-      this.router.navigate(['/main']);
+      this.router.navigate(['/main']); // routes to main page after logging in
     }
   }
 }
